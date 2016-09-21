@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Courses</title>
+		<meta name="description" content="List of courses.">
+
+		{% load staticfiles %}
+		<link rel="stylesheet" type="text/css" href="{% static 'courses/css/styles.css' %}">
+	</head>
+
+	<body>
+		<div id="container">
+		
+			<h2> Add a new course</h2>
+			
+			<form action="/create" method="post">
+			{% csrf_token %}
+				<div id="left_side">
+					<label for="course_name">Course:</label>
+					<label for="course_description">Description:</label>
+				</div>
+				<div id="right_side">
+					<input type="text" name="course_name" id="course_name">
+					<textarea name="course_description" id="course_description"rows="6" cols="30"></textarea>
+				</div>
+				<input type="submit" name="submit" value="Add" id="submit_button">
+			</form>
+
+			<h2>Courses</h2>
+
+			<table>
+				
+				<thead>
+					<tr>
+						<th>Course Name</th>
+						<th>Description</th>
+						<th>Date Added</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					{% for course in courses %}
+					<tr>
+						<td>{{course.name}}</td>
+						<td>{{course.description}}</td>
+						<td>{{course.created_at}}</td>
+						<td><a href="/{{course.id}}/delete">Remove</a></td>
+					</tr>
+					{% endfor %}	
+				</tbody>			
+			
+			</table>
+		
+		</div>
+	</body>
+</html>
